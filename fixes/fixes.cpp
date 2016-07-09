@@ -223,11 +223,9 @@ int
 	vsnprintf(dst, 1024, str, ap);
 	va_end(ap);
 	printf("%s\n", dst);
+	// So we can use "printf" without getting stuck in endless loops.
 	if (!bInPrint)
 	{
-		// So we can use "printf" without getting stuck in endless loops.
-		bInPrint = true;
-		//std::cout << "fixes.plugin: " << dst << std::endl;
 		for (int i = 0; i != 17; ++i)
 		{
 			if (gAMXPtr[i] != -1)
@@ -240,17 +238,11 @@ int
 				amx_Release(gAMXFiles[i], addr);
 				if (ret == 1)
 				{
-					bInPrint = false;
 					return 1;
 				}
 			}
 		}
-		bInPrint = false;
 	}
-	//asm
-	//{
-	//	
-	//}
 	return 1;
 }
 
